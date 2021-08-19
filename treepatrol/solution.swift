@@ -134,17 +134,23 @@ func solution() {
 // you can include as many helper functions as you want.
 
 func prune(adj: inout [[Int]], sushiList: [Int]) {
-    again: while true {
-        for i in 0..<adj.count {
-            let shouldPrune = adj[i].count == 1 && !sushiList.contains(i)
-            if !shouldPrune { continue }
-            
-            // prune
-            let j = adj[i].popLast()!
-            adj[j].removeAll(where: { $0 == i })
-            continue again;
-        }
-        return
+    let q = Queue<Int>()
+    for i in 0..<adj.count {
+        let shouldPrune = adj[i].count == 1 && !sushiList.contains(i)
+        if !shouldPrune { continue }
+        q.enqueue(item: i)
+    }
+
+    while !q.isEmpty() {
+        let current = q.dequeue()!
+        let shouldPrune = adj[current].count == 1 && !sushiList.contains(current)
+        if !shouldPrune { continue }
+        
+        // prune
+        let opposite = adj[current].popLast()!
+        adj[opposite].removeAll(where: { $0 == current })
+        
+        q.enqueue(item: opposite)
     }
 }
 
