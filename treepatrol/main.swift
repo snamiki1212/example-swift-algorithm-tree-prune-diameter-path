@@ -7,5 +7,5 @@
 
 import Foundation
 
-print("Hello, World!")
-
+// make sure you run the function (before you submit)
+solution()
