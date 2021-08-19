@@ -155,10 +155,14 @@ func prune(adj: inout [[Int]], sushiList: [Int]) {
 }
 
 func getDiameter(adj: [[Int]]) -> Int {
+    // ready for first dfs
+    let firstFrom = adj.firstIndex(where: { $0.count != 0 })
+    if firstFrom == nil { return 0 }
+
     // first dfs
     var visited1 = [Bool](repeating: false, count: adj.count)
     var distances1 = [Int](repeating: 0, count: adj.count)
-    dfs(from: 0, adj: adj, visited: &visited1, distances: &distances1)
+    dfs(from: firstFrom!, adj: adj, visited: &visited1, distances: &distances1)
     
     // ready for second dfs
     var secondFrom = -1
